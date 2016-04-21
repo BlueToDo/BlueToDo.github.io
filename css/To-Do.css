@@ -3,6 +3,7 @@ body {
     min-height: 100vh;
     flex-direction: column;
     background-image: url(thingy.png);
+    background-color: #005555;
 }
 main {
     flex: 1 0 auto;
@@ -20,4 +21,7 @@ main {
     margin-bottom: 20px;
     color: #999;
     font-style: italic;
+}
+#whiteBack{
+    background-color: white;
 }

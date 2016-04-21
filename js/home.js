@@ -8,10 +8,6 @@ $(function(){
        var postsCollection = Backendless.Persistence.of(Posts).find();
         
     console.log(postsCollection);
-          
-    $(document).ready(function(){
-      $('.parallax').parallax();
-    });
     var wrapper = {
         posts: postsCollection.data
     };
@@ -50,3 +46,6 @@ function Posts(args){
     this.content = args.content || "";
     this.authorName = args.authorName || "";
 }
+// add bool 'complete and incompelete/
+//if done do thing
+//handlebars backendless delete

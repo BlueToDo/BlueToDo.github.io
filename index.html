@@ -8,7 +8,7 @@
       <link rel=icon href="thing.png">
     </head>
    <body>
-<header>
+        <header>
             <nav>
                <div class="nav-wrapper">
                     <ul class="right">
@@ -24,7 +24,7 @@
                 <h1 class="center-align">Blue To-Dos</h1>
                 </div>
                 <div class="row">
-                    <div class="col s6 main-container">
+                    <div class="col s12 main-container">
 
                     </div>
                 </div>
@@ -38,17 +38,21 @@
             </div>
         </footer>
         
-      <!--Import jQuery before materialize.js-->
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript" src ="libs/backendless.js"></script>
       <script type="text/javascript" src ="js/home.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
       <script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
+      
       <script id="blogs-template" type="text/x-handlebars-template">
           {{#each posts}}
-          <div class="blog-post">
+          <div class="blog-post" id="whiteBack">
            <h2 class="blog-post-title">{{title}}</h2>
+           <p class="right-align">
+           <i class="material-icons">done</i>
+            <i class="material-icons">delete</i>
+            </p>
             <p class="blog-post-meta">At {{format created}}</p>
             <div>{{{content}}}</div>
           </div>

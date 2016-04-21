@@ -5,14 +5,14 @@ $(function(){
        VERSION = "v1";
        
        Backendless.initApp(APLLICATION_ID ,SECRET_KEY,VERSION);
-    //if(Backendless.UserService.isValidLogin()){
-        //userLoggedIn(Backendless.LocalCache.get("current-user-id"))
-    //} else{
+    if(Backendless.UserService.isValidLogin()){
+        userLoggedIn(Backendless.LocalCache.get("current-user-id"))
+    } else{
     var loginScript = $("#login-template").html();
     var loginTemplate = Handlebars.compile(loginScript);
 
     $('.main-container').html(loginTemplate);
-    //}
+    }
     $(document).on('submit', '.form-signin', function(event){
        event.preventDefault(); 
         
