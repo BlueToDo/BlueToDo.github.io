@@ -8,20 +8,23 @@ body {
 main {
     flex: 1 0 auto;
 }
-//blog posts\\
+//task posts\\
 
-.blog-post{
+.task-post{
     margin-bottom: 60px;
 }
-.blog-post-title{
+.task-post-title{
     margin-bottom: 5px;
     font-size: 40px;
 }
-.blog-post-meta{
+.task-post-meta{
     margin-bottom: 20px;
     color: #999;
     font-style: italic;
 }
-#whiteBack{
-    background-color: white;
+#notdone{
+    background-color: #ffffff;
+}
+#done{
+    background-color: #00aa00;
 }

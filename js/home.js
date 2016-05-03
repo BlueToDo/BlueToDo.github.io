@@ -1,51 +1,61 @@
-$(function(){
-   var APLLICATION_ID = "93F0C6F8-B946-90BC-FF45-596FCC8FFF00", 
-       SECRET_KEY = "38DECE74-C002-E7AA-FFA6-232638674100",
-       VERSION = "v1";
-       
-       Backendless.initApp(APLLICATION_ID ,SECRET_KEY,VERSION);
-       
-       var postsCollection = Backendless.Persistence.of(Posts).find();
-        
-    console.log(postsCollection);
+$(function () {
+    var APLLICATION_ID = "93F0C6F8-B946-90BC-FF45-596FCC8FFF00",
+            SECRET_KEY = "38DECE74-C002-E7AA-FFA6-232638674100",
+            VERSION = "v1";
+
+    Backendless.initApp(APLLICATION_ID, SECRET_KEY, VERSION);
+
+    if (Backendless.UserService.isValidLogin()) {
+        userLoggedIn(Backendless.LocalCache.get("current-user-id"));
+    }
+    var userData;
+    function userLoggedIn(user) {
+        console.log("logged in");
+        if (typeof user === "string") {
+            userData = Backendless.Data.of(Backendless.User).findById(user);
+        } else {
+            userData = user;
+        }
+        console.log(user);
+        console.log(Backendless.LocalCache.get("current-user-id"));
+    }
+    var userId = Backendless.LocalCache.get("current-user-id");
+    //var userId = "'73E1D4C0-619C-261C-FF2E-1BE547A4D000'";
+    var dataQuery = { condition: "ownerId = '" + userId +"'"};
+    var tasksCollection = Backendless.Persistence.of(Posts).find( dataQuery );
+
     var wrapper = {
-        posts: postsCollection.data
+        posts: tasksCollection.data
     };
-    
     Handlebars.registerHelper('format', function (time) {
         return moment(time).format("ddd, MMM Do YYYY");
-    }); 
-    Handlebars.registerHelper('poststoday',function () {
-    var ALPHA = 0;
-    
-        return ALPHA;
     });
-    
-    var blogScript = $("#blogs-template").html();
-    var blogTemplate = Handlebars.compile(blogScript);
-    var blogHTML =  blogTemplate(wrapper);
-    
-    $('.main-container').html(blogHTML);
-        
-    var blogScriptB = $("#poststoday-template").html();
-    var blogTemplateB = Handlebars.compile(blogScriptB);
-    var blogHTMLB =  blogTemplateB(wrapper);
-    
-    $('.badge').html(blogHTMLB);
-    
-    var blogScriptC = $("#Titles-template").html();
-    var blogTemplateC = Handlebars.compile(blogScriptC);
-    var blogHTMLC =  blogTemplateC(wrapper);
 
-   $('#post-titles').html(blogHTMLC);
+    var taskScript = $("#tasks-template").html();
+    var taskTemplate = Handlebars.compile(taskScript);
+    var taskHTML = taskTemplate(wrapper);
 
+    $('.main-container').html(taskHTML);
+
+
+    function Posts(args) {
+        args = args || {};
+        this.content = args.content || "";
+        this.authorName = args.authorName || "";
+        this.complete = args.complete || "";
+    }
+    $(document).on('click', '.doneTask', function (event) {
+        console.log(event.target.attributes.data.nodeValue);
+        Backendless.Persistence.of(Posts).save(event.target.attributes.data.nodeValue);
+        markComplete["complete"] = "true";
+        dataStore.save(markComplete);
+        Materialize.toast('DONE', 2000);
+        location.reload();
+    });
+    $(document).on('click', '.deleteTask', function (event) {
+        console.log(event.target.attributes.data.nodeValue);
+        Backendless.Persistence.of(Posts).remove(event.target.attributes.data.nodeValue);
+        Materialize.toast('DELETED', 2000);
+        location.reload();
+    });
 });
-function Posts(args){
-    args = args || {};
-    this.title = args.title || "";
-    this.content = args.content || "";
-    this.authorName = args.authorName || "";
-}
-// add bool 'complete and incompelete/
-//if done do thing
-//handlebars backendless delete
