@@ -53,7 +53,7 @@ $(function () {
             console.log(Backendless.UserService.getCurrentUser());
             var postObject = new Posts({
                 content: content,
-                comeplete: "false",
+                comeplete: false,
                 authorName: Backendless.UserService.getCurrentUser().name
             });
             dataStore.save(postObject);

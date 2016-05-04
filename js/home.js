@@ -16,13 +16,10 @@ $(function () {
         } else {
             userData = user;
         }
-        console.log(user);
-        console.log(Backendless.LocalCache.get("current-user-id"));
     }
     var userId = Backendless.LocalCache.get("current-user-id");
-    //var userId = "'73E1D4C0-619C-261C-FF2E-1BE547A4D000'";
-    var dataQuery = { condition: "ownerId = '" + userId +"'"};
-    var tasksCollection = Backendless.Persistence.of(Posts).find( dataQuery );
+    var dataQuery = {condition: "ownerId = '" + userId + "'"};
+    var tasksCollection = Backendless.Persistence.of(Posts).find(dataQuery);
 
     var wrapper = {
         posts: tasksCollection.data
@@ -45,13 +42,17 @@ $(function () {
         this.complete = args.complete || "";
     }
     $(document).on('click', '.doneTask', function (event) {
-        console.log(event.target.attributes.data.nodeValue);
-        Backendless.Persistence.of(Posts).save(event.target.attributes.data.nodeValue);
-        markComplete["complete"] = "true";
+               
+        var dataStore = Backendless.Persistence.of(Posts)
+        
+        var markComplete = Backendless.Persistence.of(Posts).findById(event.target.attributes.data.nodeValue);
+        
+        markComplete["complete"] = !markComplete["complete"];
+        
         dataStore.save(markComplete);
         Materialize.toast('DONE', 2000);
         location.reload();
-    });
+            });
     $(document).on('click', '.deleteTask', function (event) {
         console.log(event.target.attributes.data.nodeValue);
         Backendless.Persistence.of(Posts).remove(event.target.attributes.data.nodeValue);

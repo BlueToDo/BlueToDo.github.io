@@ -47,8 +47,8 @@
 
         <script id="tasks-template" type="text/x-handlebars-template">
             {{#each posts}}
-            
-            <div class="task-post" id="notdone">
+            {{#if complete}}
+            <div class="task-post" id="done">
             <p class="right-align">
             <i class="material-icons doneTask" type="submit" name="action" data={{objectId}}>done</i>
             <i class="material-icons deleteTask" type="submit" name="action" data={{objectId}}>delete</i>
@@ -56,6 +56,16 @@
             <p class="task-post-meta">created {{format created}}</p>
             <div>{{{content}}}</div>
             </div>
+    {{else}}
+    <div class="task-post" id="notdone">
+            <p class="right-align">
+            <i class="material-icons doneTask" type="submit" name="action" data={{objectId}}>done</i>
+            <i class="material-icons deleteTask" type="submit" name="action" data={{objectId}}>delete</i>
+            </p>
+            <p class="task-post-meta">created {{format created}}</p>
+            <div>{{{content}}}</div>
+            </div>
+    {{/if}}
             {{/each}} 
         </script>
     </body>
